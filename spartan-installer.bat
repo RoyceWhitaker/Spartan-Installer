@@ -89,7 +89,7 @@ SET RETURN=Return
 
 
 ::===============================Main Menu==========================================
-title *SRS* By: Associated Students
+title *SRS Software Installer* By: Associated Students
 cls
 echo                             Main Menu
 echo *******************************************************************************
