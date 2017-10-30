@@ -1,5 +1,24 @@
 @echo off
 Title *SRS Software Installer*
+
+setlocal ENABLEDELAYEDEXPANSION & set "_FilePath=%~1"
+  if NOT EXIST "!_FilePath!" (echo/Starting AdminElevation)
+  set "_FN=_%~ns1" & echo/%TEMP%| findstr /C:"(" >nul && (echo/ERROR: %%TEMP%% path can not contain parenthesis &pause &endlocal &fc;: 2>nul & goto:eof)
+  set _FN=%_FN:(=%
+  set _vbspath="%temp:~%\%_FN:)=%.vbs" & set "_batpath=%temp:~%\%_FN:)=%.bat"
+  >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+  if "%errorlevel%" NEQ "0" goto :_getElevation
+  (if exist %_vbspath% ( del %_vbspath% )) & (if exist %_batpath% ( del %_batpath% )) 
+  endlocal & CD /D "%~dp1" & ver >nul & goto:eof
+  :_getElevation
+  echo/Requesting elevation...
+  echo/Set UAC = CreateObject^("Shell.Application"^) > %_vbspath% || (echo/&echo/Unable to create %_vbspath% & endlocal &md; 2>nul &goto:eof) 
+  echo/UAC.ShellExecute "%_batpath%", "", "", "runas", 1 >> %_vbspath% & echo/wscript.Quit(1)>> %_vbspath%
+  echo/@%* > "%_batpath%" || (echo/&echo/Unable to create %_batpath% & endlocal &md; 2>nul &goto:eof)
+  echo/@if %%errorlevel%%==9009 (echo/Admin user could not read the batch file. If running from a mapped drive or UNC path, check if Admin user can read it.) ^& @if %%errorlevel%% NEQ 0 pause >> "%_batpath%"
+  %_vbspath% && (echo/&echo/Failed to run VBscript %_vbspath% &endlocal &md; 2>nul & goto:Ask)
+  echo/&echo/Elevation was requested on a new CMD window &endlocal &fc;: 2>nul & goto:Ask
+
 goto:Ask
 :Ask
 cls
@@ -22,6 +41,7 @@ echo Incorrect input & goto Ask
 Cls
 md temp
 cd temp
+cls
 echo %time% Please Wait Downloading Required Program Files
 echo [#             ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/flash.exe', 'flash.exe')"
@@ -76,7 +96,7 @@ echo ***************************************************************************
 echo *                                                                             *
 echo *  Enter 1 To begin installing the software                                   *
 echo *                                                                             *
-echo *  Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip                     *
+echo *  Software: Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip           *
 echo *                                                                             *
 echo *  Enter 9 To Exit Without Installing                                         *
 echo *                                                                             *
@@ -109,12 +129,12 @@ IF EXIST "%PROGRAMFILES(X86)%" (GOTO 64BIT) ELSE (GOTO 32BIT)
 
 :32BIT 
 echo %time% Loading the Firefox Installer
-call firefox-installer.exe
-GOTO installfirefox
+call FirefoxInstaller.exe
+GOTO installflash
 :64BIT
-eecho %time% Loading the Firefox Installer
-call firefox-installer.exe
-GOTO installfirefox
+echo %time% Loading the Firefox Installer
+call FirefoxInstaller.exe
+GOTO installflash
 
 
 
@@ -128,7 +148,7 @@ echo %time% Loading the Flash Player Installer
 call flash.exe
 GOTO installmalwarebytes
 :64BIT
-eecho %time% Loading the Flash Player Installer
+echo %time% Loading the Flash Player Installer
 call flash.exe
 GOTO installmalwarebytes
 
@@ -143,7 +163,7 @@ echo %time% Loading the Malwarebytes Installer
 call mb3.exe
 GOTO installvlc
 :64BIT
-eecho %time% Loading the Malwarebytes Installer
+echo %time% Loading the Malwarebytes Installer
 call mb3.exe
 GOTO installvlc
 
@@ -158,7 +178,7 @@ echo %time% Loading the VLC Installer
 call vlc.exe
 GOTO install7zip
 :64BIT
-eecho %time% Loading the VLC Installer
+echo %time% Loading the VLC Installer
 call ClchromeSetup.exe
 GOTO install7zip
 
@@ -175,7 +195,7 @@ echo %time% Loading the Google Chrome Installer
 call 7zip-x32.exe
 GOTO z
 :64BIT
-eecho %time% Loading the Google Chrome Installer
+echo %time% Loading the Google Chrome Installer
 call 7zip-x64.exe
 GOTO z
 
@@ -192,7 +212,7 @@ TIMEOUT /T 1
 cls
 echo                            Closing Application
 echo *******************************************************************************
-echo %time% Cleaning up temporary files...
+echo %time% Cleaning up temporary files... Please Wait.
 RD temp /S
 TIMEOUT /T 2
 
