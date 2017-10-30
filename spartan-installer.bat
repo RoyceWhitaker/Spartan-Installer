@@ -75,7 +75,7 @@ echo [##############]
 
 
 cls
-title *SRS* Associated Students
+title *SRS* Software Installer
 ::------Create and switch to folder------
 
 
@@ -96,7 +96,11 @@ echo ***************************************************************************
 echo *                                                                             *
 echo *  Enter 1 To begin installing the software                                   *
 echo *                                                                             *
+<<<<<<< HEAD
 echo *  Software: Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip           *
+=======
+echo *  Software: Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip                     *
+>>>>>>> 6e44dd8f003452692f058f1b1820ac84ee633391
 echo *                                                                             *
 echo *  Enter 9 To Exit Without Installing                                         *
 echo *                                                                             *
@@ -129,11 +133,11 @@ IF EXIST "%PROGRAMFILES(X86)%" (GOTO 64BIT) ELSE (GOTO 32BIT)
 
 :32BIT 
 echo %time% Loading the Firefox Installer
-call FirefoxInstaller.exe
+call firefox-install.exe
 GOTO installflash
 :64BIT
 echo %time% Loading the Firefox Installer
-call FirefoxInstaller.exe
+call firefox-install.exe
 GOTO installflash
 
 
@@ -212,7 +216,11 @@ TIMEOUT /T 1
 cls
 echo                            Closing Application
 echo *******************************************************************************
+<<<<<<< HEAD
 echo %time% Cleaning up temporary files... Please Wait.
+=======
+echo %time% Cleaning up temporary files... Please Wait...
+>>>>>>> 6e44dd8f003452692f058f1b1820ac84ee633391
 RD temp /S
 TIMEOUT /T 2
 
