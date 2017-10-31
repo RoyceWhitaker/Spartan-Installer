@@ -42,31 +42,35 @@ Cls
 md temp
 cd temp
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading Flash - 1.14 mb
 echo [#             ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/flash.exe', 'flash.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading Google Chrome - 1.07 mb
 echo [##            ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/ChromeSetup.exe', 'ChromeSetup.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading Firefox - 239 kb
 echo [###           ]
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/Firefox%20Installer.exe', 'FirefoxInstaller.exe')"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/Firefox-Installer.exe', 'Firefox-Installer.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading Firefox Installer 1.03 mb
+echo [####          ]
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/firefox-install.exe', 'firefox-install.exe')"
+cls
+echo %time% Downloading 7zip x32 - 1.05 mb
 echo [####          ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/7z-x32.exe', '7z-x32.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading 7zip x64 - 1.31
 echo [#####         ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/7z-x64.exe', '7z-x64.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading Malwarebytes - 68.2 mb
 echo [######        ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/mb3.exe', 'mb3.exe')"
 cls
-echo %time% Please Wait Downloading Required Program Files
+echo %time% Downloading VLC - 29.5 mb
 echo [#######       ]
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/RoyceWhitaker/Spartan-Installer/raw/master/Programs/vlc.exe', 'vlc.exe')"
 cls
@@ -96,11 +100,7 @@ echo ***************************************************************************
 echo *                                                                             *
 echo *  Enter 1 To begin installing the software                                   *
 echo *                                                                             *
-<<<<<<< HEAD
 echo *  Software: Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip           *
-=======
-echo *  Software: Chrome, Firefox, Flash Player, Malwarebytes, VLC, 7Zip                     *
->>>>>>> 6e44dd8f003452692f058f1b1820ac84ee633391
 echo *                                                                             *
 echo *  Enter 9 To Exit Without Installing                                         *
 echo *                                                                             *
@@ -126,6 +126,8 @@ echo %time% Loading the Google Chrome Installer
 call ChromeSetup.exe
 GOTO installfirefox
 
+TIMEOUT /T 25
+
 :installfirefox
 cls
 :CheckOS
@@ -140,7 +142,7 @@ echo %time% Loading the Firefox Installer
 call firefox-install.exe
 GOTO installflash
 
-
+TIMEOUT /T 25
 
 :installflash
 cls
@@ -156,6 +158,7 @@ echo %time% Loading the Flash Player Installer
 call flash.exe
 GOTO installmalwarebytes
 
+TIMEOUT /T 25
 
 :installmalwarebytes
 cls
@@ -171,6 +174,7 @@ echo %time% Loading the Malwarebytes Installer
 call mb3.exe
 GOTO installvlc
 
+TIMEOUT /T 25
 
 :installvlc
 cls
@@ -186,8 +190,7 @@ echo %time% Loading the VLC Installer
 call ClchromeSetup.exe
 GOTO install7zip
 
-
-
+TIMEOUT /T 25
 
 :install7zip
 cls
@@ -203,6 +206,7 @@ echo %time% Loading the Google Chrome Installer
 call 7zip-x64.exe
 GOTO z
 
+TIMEOUT /T 25
 
 :z
 cls
@@ -216,17 +220,10 @@ TIMEOUT /T 1
 cls
 echo                            Closing Application
 echo *******************************************************************************
-<<<<<<< HEAD
 echo %time% Cleaning up temporary files... Please Wait.
-=======
+======
 echo %time% Cleaning up temporary files... Please Wait...
->>>>>>> 6e44dd8f003452692f058f1b1820ac84ee633391
 RD temp /S
 TIMEOUT /T 2
 
-exit
-
-
-
-:no
 exit
